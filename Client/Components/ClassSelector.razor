@@ -1,0 +1,27 @@
+﻿@inject ClassService classService
+
+@if (classes == null)
+{
+    <div>Loading ...</div>
+}
+else
+{
+    foreach (var item in classes)
+    {
+        <div @onclick="e => OnClassSelected.InvokeAsync(item)">@item.Name</div>
+    }
+}
+
+@code {
+    private IList<TalentClass> classes;
+
+    [Parameter]
+    public EventCallback<TalentClass> OnClassSelected { get; set; }
+
+    private int SelectedId;
+
+    protected override void OnInitialized()
+    {
+        classes = classService.GetTalentClasses();
+    }
+}

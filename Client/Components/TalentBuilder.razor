@@ -1,0 +1,27 @@
+﻿@inject ClassService classService
+
+<ClassSelector OnClassSelected="ClassChange" />
+
+<p>Selected class: @(selectedClass?.Name ?? "-")</p>
+
+@if (talents != null)
+{
+    foreach (var talent in talents)
+    {
+        <Talent TalentNode="talent" Row="0" />
+    }
+}
+
+@code {
+
+    private TalentClass selectedClass;
+
+    private IList<TalentNode> talents;
+
+    public void ClassChange(TalentClass talentClass)
+    {
+        selectedClass = talentClass;
+
+        talents = classService.GetTalentNodes(selectedClass);
+    }
+}

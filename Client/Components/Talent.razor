@@ -1,0 +1,53 @@
+﻿<div oncontextmenu="return false;" @onmouseup="e => HandleTalentClick(e)">
+    @TalentNode.Name - @rank/@maxRank (@talentState.ToString())
+</div>
+
+@code {
+    [Parameter]
+    public TalentNode TalentNode { get; set; }
+
+    [Parameter]
+    public int Row { get; set; }
+
+    //[CascadingParameter]
+    //public int 
+
+    private int rank;
+    private int maxRank;
+    private TalentState talentState;
+    private int requiredPoints;
+
+    protected override void OnInitialized()
+    {
+        rank = 0;
+        maxRank = TalentNode.Ranks.Count;
+        requiredPoints = Row * 5;
+
+        talentState = TalentState.Disabled;
+
+        if (requiredPoints < 5)
+            talentState = TalentState.Enabled;
+    }
+
+    private void HandleTalentClick(MouseEventArgs e)
+    {
+        if (e.Button != 0 && e.Button != 2)
+            return;
+
+        var action = e.Button == 0 ? BuildAction.Learn : BuildAction.Unlearn;
+
+        switch (action)
+        {
+            case BuildAction.Unlearn:
+                rank = rank > 0 ? --rank : 0;
+                break;
+            case BuildAction.Learn:
+                rank = rank < maxRank ? ++rank : rank;
+                break;
+        }
+
+        talentState = TalentState.PartiallyActive;
+        if (rank == 0) talentState = TalentState.Enabled;
+        if (rank == maxRank) talentState = TalentState.FullyActive;
+    }
+}
