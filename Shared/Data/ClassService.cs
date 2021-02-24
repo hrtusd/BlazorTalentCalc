@@ -34,14 +34,21 @@ namespace BlazorTalentCalc.Shared.Data
                 {
                     case 3:
                         talentClass.AddTalent("Nature's Grasp", "While active, get rekt.")
-                            .AddRank("");
+                            .AddRank("")
+                            .SetPosition(0, 1);
 
                         talentClass.AddTalent("Starlight Wrath", "Reduces cast time of Wrath by {0} sec.")
                             .AddRank("0.1")
                             .AddRank("0.2")
                             .AddRank("0.3")
                             .AddRank("0.4")
-                            .AddRank("0.5");
+                            .AddRank("0.5")
+                            .SetPosition(0, 0);
+
+                        talentClass.AddTalent("Improved Moonfire", "Increases the damage and critical strike chance of your Moonfire spell by {0}%.")
+                            .AddRank("5")
+                            .AddRank("1")
+                            .SetPosition(1, 2);
                         break;
                 }
             }

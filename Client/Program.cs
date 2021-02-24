@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using BlazorTalentCalc.Client.Shared;
 using BlazorTalentCalc.Shared.Data;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,8 @@ namespace BlazorTalentCalc.Client
 
             var baseAddress = builder.Configuration["BaseAddress"] ?? builder.HostEnvironment.BaseAddress;
             builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(baseAddress) });
+
+            builder.Services.AddScoped<AppState>();
 
             builder.Services.AddTransient<ClassService>();
 

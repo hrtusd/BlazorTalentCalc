@@ -11,6 +11,7 @@ namespace BlazorTalentCalc.Shared.Models
         public string TextFormat { get; private set; }
         public TalentNode? Requirement { get; private set; }
         public IList<TalentRank> Ranks { get; private set; }
+        public TalentPosition Position { get; private set; }
         public TalentClass Class { get; private set; }
 
         private int ranksCtr;
@@ -24,6 +25,7 @@ namespace BlazorTalentCalc.Shared.Models
             Requirement = requirement;
 
             Ranks = new List<TalentRank>();
+            Position = new TalentPosition(-1, -1);
 
             ranksCtr = 0;
         }
@@ -38,6 +40,13 @@ namespace BlazorTalentCalc.Shared.Models
             };
 
             Ranks.Add(rank);
+
+            return this;
+        }
+
+        public TalentNode SetPosition(int row, int column)
+        {
+            Position = new TalentPosition(row, column);
 
             return this;
         }

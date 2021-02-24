@@ -1,16 +1,13 @@
-﻿<div oncontextmenu="return false;" @onmouseup="e => HandleTalentClick(e)">
+﻿@inject AppState appState
+@implements IDisposable 
+
+<div class="talent-node" oncontextmenu="return false;" @onmouseup="e => HandleTalentClick(e)">
     @TalentNode.Name - @rank/@maxRank (@talentState.ToString())
 </div>
 
 @code {
     [Parameter]
     public TalentNode TalentNode { get; set; }
-
-    [Parameter]
-    public int Row { get; set; }
-
-    //[CascadingParameter]
-    //public int 
 
     private int rank;
     private int maxRank;
@@ -19,35 +16,53 @@
 
     protected override void OnInitialized()
     {
+        appState.OnChange += PointsUpdated;
+
         rank = 0;
         maxRank = TalentNode.Ranks.Count;
-        requiredPoints = Row * 5;
+        requiredPoints = TalentNode.Position.Row * 5;
 
         talentState = TalentState.Disabled;
 
-        if (requiredPoints < 5)
+        if (requiredPoints <= appState.TotalPoints)
+            talentState = TalentState.Enabled;
+    }
+
+    private void PointsUpdated()
+    {
+        if (talentState == TalentState.Disabled && requiredPoints <= appState.TotalPoints)
             talentState = TalentState.Enabled;
     }
 
     private void HandleTalentClick(MouseEventArgs e)
     {
-        if (e.Button != 0 && e.Button != 2)
+        if (e.Button != 0 && e.Button != 2 || talentState == TalentState.Disabled)
             return;
 
         var action = e.Button == 0 ? BuildAction.Learn : BuildAction.Unlearn;
 
+        var add = 0;
+
         switch (action)
         {
             case BuildAction.Unlearn:
-                rank = rank > 0 ? --rank : 0;
+                add = rank > 0 ? -1 : 0;
                 break;
             case BuildAction.Learn:
-                rank = rank < maxRank ? ++rank : rank;
+                add = rank < maxRank ? 1 : 0;
                 break;
         }
+
+        rank += add;
+        appState.SetTotalPoints(appState.TotalPoints + add);
 
         talentState = TalentState.PartiallyActive;
         if (rank == 0) talentState = TalentState.Enabled;
         if (rank == maxRank) talentState = TalentState.FullyActive;
+    }
+
+    public void Dispose()
+    {
+        appState.OnChange -= PointsUpdated;
     }
 }

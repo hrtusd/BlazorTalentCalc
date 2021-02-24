@@ -1,14 +1,17 @@
 ﻿@inject ClassService classService
+@inject AppState appState
+@implements IDisposable
 
 <ClassSelector OnClassSelected="ClassChange" />
 
 <p>Selected class: @(selectedClass?.Name ?? "-")</p>
+<p>Total points: @appState.TotalPoints</p>
 
 @if (talents != null)
 {
     foreach (var talent in talents)
     {
-        <Talent TalentNode="talent" Row="0" />
+        <Talent TalentNode="talent" />
     }
 }
 
@@ -18,10 +21,23 @@
 
     private IList<TalentNode> talents;
 
+    protected override void OnInitialized()
+    {
+        appState.OnChange += StateHasChanged;
+
+        appState.SetTotalPoints(0);
+    }
+
     public void ClassChange(TalentClass talentClass)
     {
         selectedClass = talentClass;
 
         talents = classService.GetTalentNodes(selectedClass);
+        appState.SetTotalPoints(0);
+    }
+
+    public void Dispose()
+    {
+        appState.OnChange -= StateHasChanged;
     }
 }

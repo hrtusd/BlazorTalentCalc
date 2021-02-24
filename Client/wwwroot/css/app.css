@@ -8,6 +8,11 @@ app {
     flex-direction: column;
 }
 
+.talent-node {
+    user-select: none;
+    cursor: pointer;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
