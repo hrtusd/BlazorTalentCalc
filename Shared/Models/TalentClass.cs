@@ -8,7 +8,7 @@ namespace BlazorTalentCalc.Shared.Models
     {
         public int Key { get; private set; }
         public string Name { get; private set; }
-        public IList<TalentNode> Talents { get; private set; }
+        public IList<ClassSpecialization> Specializations { get; private set; }
 
         private int idx;
 
@@ -16,18 +16,18 @@ namespace BlazorTalentCalc.Shared.Models
         {
             Key = key;
             Name = name;
-            Talents = new List<TalentNode>();
+            Specializations = new List<ClassSpecialization>();
 
             idx = 0;
         }
 
-        public TalentNode AddTalent(string name, string textFormat, TalentNode? requirement = null)
+        public ClassSpecialization AddSpecialization(string name)
         {
-            var talent = new TalentNode(idx++, name, textFormat, this, requirement);
+            var specialization = new ClassSpecialization(idx++, name);
 
-            Talents.Add(talent);
+            Specializations.Add(specialization);
 
-            return talent;
+            return specialization;
         }
     }
 }

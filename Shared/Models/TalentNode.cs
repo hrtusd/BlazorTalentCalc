@@ -12,16 +12,16 @@ namespace BlazorTalentCalc.Shared.Models
         public TalentNode? Requirement { get; private set; }
         public IList<TalentRank> Ranks { get; private set; }
         public TalentPosition Position { get; private set; }
-        public TalentClass Class { get; private set; }
+        public ClassSpecialization Specialization { get; private set; }
 
         private int ranksCtr;
 
-        public TalentNode(int key, string name, string textFormat, TalentClass talentClass, TalentNode? requirement = null)
+        public TalentNode(int key, string name, string textFormat, ClassSpecialization classSpecialization, TalentNode? requirement = null)
         {
             Key = key;
             Name = name;
             TextFormat = textFormat;
-            Class = talentClass;
+            Specialization = classSpecialization;
             Requirement = requirement;
 
             Ranks = new List<TalentRank>();
@@ -32,23 +32,18 @@ namespace BlazorTalentCalc.Shared.Models
 
         public TalentNode AddRank(params string []values)
         {
-            var rank = new TalentRank()
-            {
-                Rank = ++ranksCtr,
-                Talent = this,
-                Values = values
-            };
+            var rank = new TalentRank(++ranksCtr, values, this);
 
             Ranks.Add(rank);
 
             return this;
         }
 
-        public TalentNode SetPosition(int row, int column)
+        public ClassSpecialization SetPosition(int row, int column)
         {
             Position = new TalentPosition(row, column);
 
-            return this;
+            return Specialization;
         }
     }
 }

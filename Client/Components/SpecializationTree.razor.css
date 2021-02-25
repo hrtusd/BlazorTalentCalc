@@ -1,0 +1,10 @@
+﻿.spec-tree-wrap {
+    border: 1px solid black;
+    padding: 20px;
+}
+
+.spec-tree {
+    display: grid;
+    grid-template-columns: repeat(4, 60px);
+    grid-gap: 20px;
+}

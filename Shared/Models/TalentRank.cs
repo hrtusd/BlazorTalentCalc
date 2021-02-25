@@ -1,9 +1,18 @@
-﻿namespace BlazorTalentCalc.Shared.Models
+﻿#nullable enable
+
+namespace BlazorTalentCalc.Shared.Models
 {
     public class TalentRank
     {
-        public int Rank { get; set; }
-        public string[] Values { get; set; }
-        public TalentNode Talent { get; set; }
+        public int Rank { get; private set; }
+        public string[] Values { get; private set; }
+        public TalentNode Talent { get; private set; }
+
+        public TalentRank(int rank, string[] values, TalentNode talent)
+        {
+            Rank = rank;
+            Values = values;
+            Talent = talent;
+        }
     }
 }

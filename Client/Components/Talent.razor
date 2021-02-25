@@ -1,9 +1,29 @@
 ﻿@inject AppState appState
 @implements IDisposable 
 
-<div class="talent-node" oncontextmenu="return false;" @onmouseup="e => HandleTalentClick(e)">
-    @TalentNode.Name - @rank/@maxRank (@talentState.ToString())
-</div>
+<Tooltip>
+    <ChildContent>
+        <div class="talent-node @talentStateClass" oncontextmenu="return false;" @onmouseup="e => HandleTalentClick(e)">
+            <img src="img/talents/@($"{appState.Build.Class.Key}_{TalentNode.Specialization.Key}_{TalentNode.Key}.png")" />
+            <span>@rank/@maxRank</span>
+        </div>
+    </ChildContent>
+    <TooltipContent>
+        @TalentNode.Name - @rank/@maxRank<br />
+        @if (rank > 0)
+        {
+            @:Current rank:
+            @string.Format(TalentNode.TextFormat, TalentNode.Ranks.First(x => x.Rank == rank).Values)
+            <br />
+        }
+        @if (rank < maxRank)
+        {
+            @:Next rank:
+            @string.Format(TalentNode.TextFormat, TalentNode.Ranks.First(x => x.Rank == rank + 1).Values)
+            <br />
+        }
+    </TooltipContent>
+</Tooltip>
 
 @code {
     [Parameter]
@@ -13,6 +33,10 @@
     private int maxRank;
     private TalentState talentState;
     private int requiredPoints;
+
+    private int specPoints;
+
+    private string talentStateClass;
 
     protected override void OnInitialized()
     {
@@ -24,14 +48,42 @@
 
         talentState = TalentState.Disabled;
 
-        if (requiredPoints <= appState.TotalPoints)
-            talentState = TalentState.Enabled;
+        appState.SetSpecializationPoints(TalentNode.Specialization.Key, 0);
+        specPoints = appState.SpecializationPoints.ContainsKey(TalentNode.Specialization.Key) ? appState.SpecializationPoints[TalentNode.Specialization.Key] : 0;
+
+        PointsUpdated();
+
+        //if (requiredPoints <= specPoints)
+        //    talentState = TalentState.Enabled;
+
+        //talentStateClass = talentState switch
+        //{
+        //    TalentState.Disabled => "disabled",
+        //    TalentState.Enabled => "enabled",
+        //    TalentState.PartiallyActive => "partially-active",
+        //    TalentState.FullyActive => "fully-active",
+        //    _ => ""
+        //};
     }
 
     private void PointsUpdated()
     {
-        if (talentState == TalentState.Disabled && requiredPoints <= appState.TotalPoints)
+        specPoints = appState.SpecializationPoints.ContainsKey(TalentNode.Specialization.Key) ? appState.SpecializationPoints[TalentNode.Specialization.Key] : 0;
+
+        if (talentState == TalentState.Disabled && requiredPoints <= specPoints)
             talentState = TalentState.Enabled;
+
+        if (talentState != TalentState.Disabled && requiredPoints > specPoints)
+            talentState = TalentState.Disabled;
+
+        talentStateClass = talentState switch
+        {
+            TalentState.Disabled => "disabled",
+            TalentState.Enabled => "enabled",
+            TalentState.PartiallyActive => "partially-active",
+            TalentState.FullyActive => "fully-active",
+            _ => ""
+        };
     }
 
     private void HandleTalentClick(MouseEventArgs e)
@@ -41,24 +93,68 @@
 
         var action = e.Button == 0 ? BuildAction.Learn : BuildAction.Unlearn;
 
-        var add = 0;
-
         switch (action)
         {
             case BuildAction.Unlearn:
-                add = rank > 0 ? -1 : 0;
+                UnlearnRank();
                 break;
             case BuildAction.Learn:
-                add = rank < maxRank ? 1 : 0;
+                LearnRank();
                 break;
         }
+    }
 
-        rank += add;
-        appState.SetTotalPoints(appState.TotalPoints + add);
+    private void LearnRank()
+    {
+        if (appState.TotalPoints < appState.AvailablePoints &&
+            rank < maxRank) // TODO: TalentNode Requirement
+        {
+            rank += 1;
 
-        talentState = TalentState.PartiallyActive;
-        if (rank == 0) talentState = TalentState.Enabled;
-        if (rank == maxRank) talentState = TalentState.FullyActive;
+            appState.AddBuildRank(TalentNode.Ranks.FirstOrDefault(x => x.Rank == rank));
+
+            if (rank > 0 && rank < maxRank) talentState = TalentState.PartiallyActive;
+            else if (rank == maxRank) talentState = TalentState.FullyActive;
+
+            appState.SetTotalPoints(appState.TotalPoints + 1);
+            appState.SetSpecializationPoints(TalentNode.Specialization.Key, specPoints + 1);
+        }
+    }
+
+    private void UnlearnRank()
+    {
+        if (rank == 0)
+            return;
+
+        var currentRow = TalentNode.Position.Row;
+        var maxRow = appState.Build.Ranks.Where(x => x.Talent.Specialization.Key == TalentNode.Specialization.Key).Select(x => x.Talent.Position.Row).Max();
+
+        var canUnlearn = true;
+
+        for (int i = currentRow; i < maxRow; i++)
+        {
+            var sameRowRanks = appState.Build.Ranks.Where(x => x.Talent.Specialization.Key == TalentNode.Specialization.Key && x.Talent.Position.Row <= i).Count();
+            var pointsInUpperRow = appState.Build.Ranks.Where(x => x.Talent.Position.Row == i + 1).Count();
+
+            if (pointsInUpperRow > 0 && sameRowRanks <= (i + 1) * 5)
+            {
+                canUnlearn = false;
+                break;
+            }
+        }
+
+        if (canUnlearn) // TODO: TalentNode Requirement
+        {
+            appState.RemoveBuildRank(TalentNode.Ranks.FirstOrDefault(x => x.Rank == rank));
+
+            rank -= 1;
+
+            if (rank > 0 && rank < maxRank) talentState = TalentState.PartiallyActive;
+            else if (rank == 0) talentState = TalentState.Enabled;
+
+            appState.SetTotalPoints(appState.TotalPoints - 1);
+            appState.SetSpecializationPoints(TalentNode.Specialization.Key, specPoints - 1);
+        }
     }
 
     public void Dispose()

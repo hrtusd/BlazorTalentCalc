@@ -2,24 +2,32 @@
 @inject AppState appState
 @implements IDisposable
 
-<ClassSelector OnClassSelected="ClassChange" />
+<ClassSelector SelectedClass="selectedClass" OnClassSelected="ClassChange" />
 
-<p>Selected class: @(selectedClass?.Name ?? "-")</p>
-<p>Total points: @appState.TotalPoints</p>
-
-@if (talents != null)
+@if (specializations != null)
 {
-    foreach (var talent in talents)
-    {
-        <Talent TalentNode="talent" />
-    }
+    <div class="spec-trees">
+        @foreach (var spec in specializations)
+        {
+            <SpecializationTree Specialization="spec" />
+        }
+    </div>
 }
+
+<p>Total points: @appState.TotalPoints</p>
+<p>Available points: @(appState.AvailablePoints - appState.TotalPoints)</p>
+
+@*<h5>Learned ranks:</h5>
+    @foreach (var rank in appState.Build.Ranks)
+    {
+        <p>@rank.Talent.Name (@rank.Rank/@rank.Talent.Ranks.Count)</p>
+    }*@
 
 @code {
 
     private TalentClass selectedClass;
 
-    private IList<TalentNode> talents;
+    private IList<ClassSpecialization> specializations;
 
     protected override void OnInitialized()
     {
@@ -32,7 +40,9 @@
     {
         selectedClass = talentClass;
 
-        talents = classService.GetTalentNodes(selectedClass);
+        appState.SetBuildClass(selectedClass);
+
+        specializations = classService.GetClassSpecializations(selectedClass);
         appState.SetTotalPoints(0);
     }
 

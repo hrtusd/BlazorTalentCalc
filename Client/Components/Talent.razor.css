@@ -1,0 +1,52 @@
+﻿.talent-node {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border: 1px solid whitesmoke;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.talent-node span {
+    position: absolute;
+    display: block;
+    left: 100%;
+    top: 100%;
+    transform: translate(-50%, -50%);
+    background: black;
+    color: whitesmoke;
+    padding: .2em;
+    font-size: .8rem;
+}
+
+.talent-node img {
+    width: 60px;
+    height: 60px;
+}
+
+.talent-node.enabled {
+
+}
+
+.talent-node.enabled span {
+    color: lawngreen;
+}
+
+.talent-node.partially-active {
+    border-color: lawngreen;
+}
+
+.talent-node.partially-active span {
+    color: lawngreen;
+    border-color: lawngreen;
+}
+
+.talent-node.fully-active {
+    border-color: orange;
+}
+
+.talent-node.fully-active span {
+    color: orange;
+    border-color: orange;
+}

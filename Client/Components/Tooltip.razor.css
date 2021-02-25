@@ -1,0 +1,22 @@
+﻿.tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-content {
+    visibility: hidden;
+    position: absolute;
+    min-width: 250px;
+    max-width: 400px;
+    left: calc(100% + 20px);
+    top: 0;
+    background-color: #363636;
+    color: #fff;
+    padding: 1em;
+    z-index: 1;
+    text-align: left;
+}
+
+.tooltip-wrapper:hover .tooltip-content {
+    visibility: visible;
+}
