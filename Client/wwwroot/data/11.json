@@ -1,0 +1,19 @@
+{
+  "specializations": [
+    {
+      "key": 0,
+      "name": "Affliction",
+      "talents": []
+    },
+    {
+      "key": 1,
+      "name": "Demonology",
+      "talents": []
+    },
+    {
+      "key": 2,
+      "name": "Destruction",
+      "talents": []
+    }
+  ]
+}

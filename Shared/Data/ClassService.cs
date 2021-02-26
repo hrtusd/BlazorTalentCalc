@@ -26,68 +26,25 @@ namespace BlazorTalentCalc.Shared.Data
             return classes;
         }
 
-        public IList<ClassSpecialization> GetClassSpecializations(TalentClass talentClass)
+        public IList<ClassSpecialization> GetClassSpecializations(TalentClass talentClass, SpecDTO data)
         {
             if (talentClass.Specializations.Count == 0)
             {
-                switch (talentClass.Key)
+                foreach (var specialization in data.specializations)
                 {
-                    case 3:
-                        talentClass.AddSpecialization("Balance")
-                            .AddTalent("Starlight Wrath", "Reduces cast time of Wrath by {0} sec.")
-                                .AddRank("0.1")
-                                .AddRank("0.2")
-                                .AddRank("0.3")
-                                .AddRank("0.4")
-                                .AddRank("0.5")
-                                .SetPosition(0, 0)
-                            .AddTalent("Nature's Grasp", "While active, get rekt.")
-                                .AddRank("")
-                                .SetPosition(0, 1)
-                            .AddTalent("Starlight Wrath 2", "Reduces cast time of Wrath by {0} sec.")
-                                .AddRank("0.1")
-                                .AddRank("0.2")
-                                .AddRank("0.3")
-                                .AddRank("0.4")
-                                .AddRank("0.5")
-                                .SetPosition(0, 2)
-                            .AddTalent("Improved Moonfire", "Increases the damage and critical strike chance of your Moonfire spell by {0}%.")
-                                .AddRank("5")
-                                .AddRank("10")
-                                .SetPosition(1, 2)
-                            .AddTalent("Insect swarm", "DoT fuck.")
-                                .AddRank()
-                                .SetPosition(2, 2);
+                    var spec = talentClass.AddSpecialization(specialization.key, specialization.name);
 
-                        talentClass.AddSpecialization("Feral")
-                            .AddTalent("Ferocity", "PH {0}")
-                                .AddRank("1")
-                                .AddRank("2")
-                                .AddRank("3")
-                                .AddRank("4")
-                                .AddRank("5")
-                                .SetPosition(0, 1)
-                            .AddTalent("Brutal Impact", "Stun duration by {0} sec.")
-                                .AddRank("0.5")
-                                .AddRank("1")
-                                .SetPosition(1, 1);
+                    foreach (var node in specialization.talents)
+                    {
+                        var talentNode = spec.AddTalent(node.key, node.name, node.text, node.requirement, node.mana, node.range, node.cast, node.cooldown);
 
-                        talentClass.AddSpecialization("Restoration")
-                            .AddTalent("Improved Mark of the Wild", "PH {0}")
-                                .AddRank("1")
-                                .AddRank("2")
-                                .AddRank("3")
-                                .AddRank("4")
-                                .AddRank("5")
-                                .SetPosition(0, 1)
-                            .AddTalent("Furor", "Stun duration by {0} sec.")
-                                .AddRank("1")
-                                .AddRank("2")
-                                .AddRank("3")
-                                .AddRank("4")
-                                .AddRank("5")
-                                .SetPosition(0, 2);
-                        break;
+                        foreach (var rank in node.ranks)
+                        {
+                            talentNode.AddRank(rank);
+                        }
+
+                        talentNode.SetPosition(node.position[0], node.position[1]);
+                    }
                 }
             }
 

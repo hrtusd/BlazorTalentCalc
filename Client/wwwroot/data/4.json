@@ -1,0 +1,19 @@
+{
+  "specializations": [
+    {
+      "key": 0,
+      "name": "Beast Matery",
+      "talents": []
+    },
+    {
+      "key": 1,
+      "name": "Marksmanship",
+      "talents": []
+    },
+    {
+      "key": 2,
+      "name": "Survival",
+      "talents": []
+    }
+  ]
+}

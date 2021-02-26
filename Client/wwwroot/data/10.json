@@ -1,0 +1,19 @@
+{
+  "specializations": [
+    {
+      "key": 0,
+      "name": "Elemental",
+      "talents": []
+    },
+    {
+      "key": 1,
+      "name": "Enhancement",
+      "talents": []
+    },
+    {
+      "key": 2,
+      "name": "Restoration",
+      "talents": []
+    }
+  ]
+}

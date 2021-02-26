@@ -1,0 +1,19 @@
+{
+  "specializations": [
+    {
+      "key": 0,
+      "name": "Arcane",
+      "talents": []
+    },
+    {
+      "key": 1,
+      "name": "Fire",
+      "talents": []
+    },
+    {
+      "key": 2,
+      "name": "Frost",
+      "talents": []
+    }
+  ]
+}

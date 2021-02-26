@@ -1,0 +1,176 @@
+{
+  "specializations": [
+    {
+      "key": 0,
+      "name": "Balance",
+      "talents": [
+        {
+          "key": 0,
+          "name": "Starlight Wrath",
+          "text": "Reduces cast time of Wrath by {0} sec.",
+          "ranks": [
+            [ "0.1" ],
+            [ "0.2" ],
+            [ "0.3" ],
+            [ "0.4" ],
+            [ "0.5" ]
+          ],
+          "position": [ 0, 0 ]
+        },
+        {
+          "key": 1,
+          "name": "Nature's Grasp",
+          "text": "While active, any time an enemy strikes the caster they have a 35% chance to become afflicted by Entangling Roots (Rank 1). Only useable outdoors. 1 charge. Lasts 45sec.",
+          "mana": "50 mana",
+          "range": "30 yd range",
+          "cast": "Instant cast",
+          "cooldown": "1 min cooldown",
+          "ranks": [ [ "" ] ],
+          "position": [ 0, 1 ]
+        },
+        {
+          "key": 2,
+          "name": "Starlight Wrath 2",
+          "text": "Reduces cast time of Wrath by {0} sec.",
+          "ranks": [
+            [ "0.1" ],
+            [ "0.2" ],
+            [ "0.3" ],
+            [ "0.4" ],
+            [ "0.5" ]
+          ],
+          "position": [ 0, 2 ]
+        },
+        {
+          "key": 3,
+          "name": "Improved Moonfire",
+          "text": "Increases the damage and critical strike chance of your Moonfire spell by {0}%.",
+          "ranks": [
+            [ "5" ],
+            [ "10" ]
+          ],
+          "position": [ 1, 2 ]
+        },
+        {
+          "key": 4,
+          "name": "Insect swarm",
+          "text": "DoT.",
+          "ranks": [ [ "" ] ],
+          "position": [ 2, 2 ]
+        }
+      ]
+    },
+    {
+      "key": 1,
+      "name": "Feral",
+      "talents": [
+        {
+          "key": 5,
+          "name": "Starlight Wrath",
+          "text": "Reduces cast time of Wrath by {0} sec.",
+          "ranks": [
+            [ "0.1" ],
+            [ "0.2" ],
+            [ "0.3" ],
+            [ "0.4" ],
+            [ "0.5" ]
+          ],
+          "position": [ 0, 0 ]
+        },
+        {
+          "key": 6,
+          "name": "Nature's Grasp",
+          "text": "While active, get rekt.",
+          "ranks": [ [ "" ] ],
+          "position": [ 0, 1 ]
+        },
+        {
+          "key": 7,
+          "name": "Starlight Wrath 2",
+          "text": "Reduces cast time of Wrath by {0} sec.",
+          "ranks": [
+            [ "0.1" ],
+            [ "0.2" ],
+            [ "0.3" ],
+            [ "0.4" ],
+            [ "0.5" ]
+          ],
+          "position": [ 0, 2 ]
+        },
+        {
+          "key": 8,
+          "name": "Improved Moonfire",
+          "text": "Increases the damage and critical strike chance of your Moonfire spell by {0}%.",
+          "ranks": [
+            [ "5" ],
+            [ "10" ]
+          ],
+          "position": [ 1, 2 ]
+        },
+        {
+          "key": 9,
+          "name": "Insect swarm",
+          "text": "DoT.",
+          "ranks": [ [ "" ] ],
+          "position": [ 2, 2 ]
+        }
+      ]
+    },
+    {
+      "key": 2,
+      "name": "Restoration",
+      "talents": [
+        {
+          "key": 5,
+          "name": "Starlight Wrath",
+          "text": "Reduces cast time of Wrath by {0} sec.",
+          "ranks": [
+            [ "0.1" ],
+            [ "0.2" ],
+            [ "0.3" ],
+            [ "0.4" ],
+            [ "0.5" ]
+          ],
+          "position": [ 0, 0 ]
+        },
+        {
+          "key": 6,
+          "name": "Nature's Grasp",
+          "text": "While active, get rekt.",
+          "ranks": [ [ "" ] ],
+          "position": [ 0, 1 ]
+        },
+        {
+          "key": 7,
+          "name": "Starlight Wrath 2",
+          "text": "Reduces cast time of Wrath by {0} sec.",
+          "ranks": [
+            [ "0.1" ],
+            [ "0.2" ],
+            [ "0.3" ],
+            [ "0.4" ],
+            [ "0.5" ]
+          ],
+          "position": [ 0, 2 ]
+        },
+        {
+          "key": 8,
+          "name": "Improved Moonfire",
+          "text": "Increases the damage and critical strike chance of your Moonfire spell by {0}%.",
+          "ranks": [
+            [ "5" ],
+            [ "10" ]
+          ],
+          "position": [ 1, 2 ]
+        },
+        {
+          "key": 9,
+          "name": "Insect swarm",
+          "text": "DoT.",
+          "ranks": [ [ "" ] ],
+          "position": [ 2, 2 ]
+        }
+      ]
+    }
+  ]
+}
