@@ -1,11 +1,12 @@
 ﻿.talent-node {
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border: 1px solid whitesmoke;
     text-align: center;
     user-select: none;
     cursor: pointer;
+    transition: all .2s ease;
 }
 
 .talent-node span {
@@ -18,15 +19,25 @@
     color: whitesmoke;
     padding: .2em;
     font-size: .8rem;
+    transition: all .2s ease;
 }
 
 .talent-node img {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
+    transition: filter .2s ease;
 }
 
-.talent-node.enabled {
+.talent-node.disabled img {
+    filter: grayscale(100%);
+}
 
+.talent-node.disabled span {
+    
+}
+
+.talent-node.enabled img {
+    filter: grayscale(100%);
 }
 
 .talent-node.enabled span {

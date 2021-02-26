@@ -1,12 +1,13 @@
 ﻿@inject ClassService classService
 @inject AppState appState
+@inject HttpClient httpClient 
 @implements IDisposable
 
 <ClassSelector SelectedClass="selectedClass" OnClassSelected="ClassChange" />
 
 @if (specializations != null)
 {
-    <div class="spec-trees">
+    <div class="spec-trees @($"c{selectedClass.Key}")">
         @foreach (var spec in specializations)
         {
             <SpecializationTree Specialization="spec" />
@@ -36,13 +37,15 @@
         appState.SetTotalPoints(0);
     }
 
-    public void ClassChange(TalentClass talentClass)
+    public async Task ClassChange(TalentClass talentClass)
     {
         selectedClass = talentClass;
 
         appState.SetBuildClass(selectedClass);
 
-        specializations = classService.GetClassSpecializations(selectedClass);
+        var data = await httpClient.GetFromJsonAsync<SpecDTO>($"data/{selectedClass.Key}.json");
+
+        specializations = classService.GetClassSpecializations(selectedClass, data);
         appState.SetTotalPoints(0);
     }
 

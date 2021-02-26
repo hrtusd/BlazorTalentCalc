@@ -1,13 +1,16 @@
 ﻿@inject AppState appState
 @implements IDisposable 
 
-<div class="spec-tree-wrap">
-    <h5>@Specialization.Name (@(appState.SpecializationPoints.ContainsKey(Specialization.Key) ? appState.SpecializationPoints[Specialization.Key] : 0))</h5>
-
-    <div class="spec-tree">
+<div class="spec-tree-wrap @($"c{appState.Build.Class.Key}")">
+    <div class="spec-tree-header">
+        <img src="img/specs/icons/@($"{appState.Build.Class.Key}_{Specialization.Key}.png")" />
+        <h5>@Specialization.Name</h5>
+        <p>@(appState.SpecializationPoints.ContainsKey(Specialization.Key) ? appState.SpecializationPoints[Specialization.Key] : 0)</p>
+    </div>
+    <div class="spec-tree" style="background-image: url(img/specs/bg/@($"{appState.Build.Class.Key}_{Specialization.Key}.jpg")">
         @if (Specialization.Talents != null)
         {
-            var maxRow = Specialization.Talents.Select(x => x.Position.Row).Max();
+            var maxRow = 9;// Specialization.Talents.Select(x => x.Position.Row).Max();
             for (int row = 0; row <= maxRow; row++)
             {
                 for (int col = 0; col < 4; col++)

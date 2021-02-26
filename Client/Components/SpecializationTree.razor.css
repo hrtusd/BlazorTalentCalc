@@ -1,10 +1,56 @@
 ﻿.spec-tree-wrap {
-    border: 1px solid black;
-    padding: 20px;
+    
+}
+
+.spec-tree-header {
+    padding: 1em;
+    border-bottom: 2px solid black;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.spec-tree-wrap.c3 .spec-tree-header { border-color: var(--druid); }
+.spec-tree-wrap.c4 .spec-tree-header { border-color: var(--hunter); }
+.spec-tree-wrap.c5 .spec-tree-header { border-color: var(--mage); }
+.spec-tree-wrap.c6 .spec-tree-header { border-color: var(--monk); }
+.spec-tree-wrap.c7 .spec-tree-header { border-color: var(--paladin); }
+.spec-tree-wrap.c8 .spec-tree-header { border-color: var(--priest); }
+.spec-tree-wrap.c9 .spec-tree-header { border-color: var(--rogue); }
+.spec-tree-wrap.c10 .spec-tree-header { border-color: var(--shaman); }
+.spec-tree-wrap.c11 .spec-tree-header { border-color: var(--warlock); }
+.spec-tree-wrap.c12 .spec-tree-header { border-color: var(--warrior); }
+
+.spec-tree-header h5 {
+    font-size: 1.2rem;
+    margin: 0;
+    flex: 1 1 auto;
+}
+
+.spec-tree-header img {
+    width: 32px;
+    height: 32px;
+    margin-right: 1em;
+    flex: 0 0 32px;
+}
+
+.spec-tree-header p {
+    font-size: .9rem;
+    margin: 0;
+    flex: 0 0 2em;
+    text-align: right;
 }
 
 .spec-tree {
     display: grid;
-    grid-template-columns: repeat(4, 60px);
-    grid-gap: 20px;
+    grid-template-columns: repeat(4, 55px);
+    grid-template-rows: repeat(9, 55px);
+    justify-content: center;
+    align-content: center;
+    grid-gap: 15px;
+    background-repeat: no-repeat;
+    width: 300px;
+    background-position: center;
+    height: 650px;
+    border: 1px solid black;
 }

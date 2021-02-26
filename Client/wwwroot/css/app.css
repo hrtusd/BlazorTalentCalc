@@ -1,5 +1,18 @@
-﻿html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+﻿:root {
+    --druid: #FF7C0A;
+    --hunter: #AAD372;
+    --mage: #3FC7EB;
+    --monk: #00FF98;
+    --paladin: #F48CBA;
+    --priest: #FFFFFF;
+    --rogue: #FFF468;
+    --shaman: #0070DD;
+    --warlock: #8788EE;
+    --warrior: #C69B6D;
+}
+
+html, body {
+    font-family: 'Nunito', Helvetica, Arial, sans-serif;
     background-color: black;
     margin: 0;
     padding: 0;
