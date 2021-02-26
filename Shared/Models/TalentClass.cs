@@ -10,20 +10,16 @@ namespace BlazorTalentCalc.Shared.Models
         public string Name { get; private set; }
         public IList<ClassSpecialization> Specializations { get; private set; }
 
-        private int idx;
-
         public TalentClass(int key, string name)
         {
             Key = key;
             Name = name;
             Specializations = new List<ClassSpecialization>();
-
-            idx = 0;
         }
 
-        public ClassSpecialization AddSpecialization(string name)
+        public ClassSpecialization AddSpecialization(int key, string name)
         {
-            var specialization = new ClassSpecialization(idx++, name);
+            var specialization = new ClassSpecialization(key, name);
 
             Specializations.Add(specialization);
 

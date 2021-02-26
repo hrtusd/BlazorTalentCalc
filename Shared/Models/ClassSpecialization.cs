@@ -10,20 +10,16 @@ namespace BlazorTalentCalc.Shared.Models
         public string Name { get; private set; }
         public IList<TalentNode> Talents { get; private set; }
 
-        private int idx;
-
         public ClassSpecialization(int key, string name)
         {
             Key = key;
             Name = name;
             Talents = new List<TalentNode>();
-
-            idx = 0;
         }
 
-        public TalentNode AddTalent(string name, string textFormat, TalentNode? requirement = null)
+        public TalentNode AddTalent(int key, string name, string textFormat, int? requirement = null, string? mana = null, string? range = null, string? cast = null, string? cooldown = null)
         {
-            var talent = new TalentNode(idx++, name, textFormat, this, requirement);
+            var talent = new TalentNode(key, name, textFormat, this, requirement, mana, range, cast, cooldown);
 
             Talents.Add(talent);
 
